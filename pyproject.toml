@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "mavlog2csv"
+version = "1.0"
+description = "Convert ardupilot telemetry log into csv with selected columns"
+authors = ["Alexander Gorokhov"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pymavlink = "^2.4.40"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+pre-commit = "^3.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
