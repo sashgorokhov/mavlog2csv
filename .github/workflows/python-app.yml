@@ -1,0 +1,31 @@
+name: Python application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install poetry
+      run: pipx install poetry
+    - uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+        cache: poetry
+    - run: poetry install --with dev
+    - name: Run pre-commit
+      run: |
+        poetry run pre-commit run -a --show-diff-on-failure
+    - name: Test
+      run: |
+        poetry run pytest -svvv tests/
