@@ -1,6 +1,6 @@
 # mavlog2csv
 
-[![Build](https://github.com/sashgorokhov/mavlog2csv/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/sashgorokhov/mavlog2csv/actions/workflows/build.yml)
+[![Test and build](https://github.com/sashgorokhov/mavlog2csv/actions/workflows/test_and_build.yml/badge.svg?branch=main)](https://github.com/sashgorokhov/mavlog2csv/actions/workflows/test_and_build.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/sashgorokhov/mavlog2csv/main)
 
