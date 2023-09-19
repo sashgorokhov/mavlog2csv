@@ -31,17 +31,13 @@ class StubMavlink:
 def build_message(message_type, ts: Optional[datetime.datetime] = None, **kwargs):
     ts = ts or datetime.datetime.now().timestamp()
     kwargs.setdefault("_timestamp", ts)
-    return type(f"TestMavlinkMessage_{message_type}", (MAVLink_message,), kwargs)(
-        msgId=0, name=message_type
-    )
+    return type(f"TestMavlinkMessage_{message_type}", (MAVLink_message,), kwargs)(msgId=0, name=message_type)
 
 
 @pytest.fixture()
 def mock_mavlink_stub():
     stub = StubMavlink()
-    with mock.patch.object(
-        mavlog2csv, "mavlink_connect", return_value=contextlib.nullcontext(stub)
-    ):
+    with mock.patch.object(mavlog2csv, "mavlink_connect", return_value=contextlib.nullcontext(stub)):
         yield stub
 
 
@@ -94,9 +90,7 @@ def test_iter_mavlink_messages(mock_mavlink_stub):
     mock_mavlink_stub.messages = [MAVLink_message(0, name="TEST")]
     mock_mavlink_stub.start()
 
-    received_messages = list(
-        mavlog2csv.iter_mavlink_messages(device="test", types={"TEST"}, skip_n_arms=0)
-    )
+    received_messages = list(mavlog2csv.iter_mavlink_messages(device="test", types={"TEST"}, skip_n_arms=0))
 
     assert len(received_messages) == 1
 
@@ -109,9 +103,7 @@ def test_iter_mavlink_messages_skip_n_arms(mock_mavlink_stub):
     ]
     mock_mavlink_stub.start()
 
-    received_messages = list(
-        mavlog2csv.iter_mavlink_messages(device="test", types={"TEST"}, skip_n_arms=1)
-    )
+    received_messages = list(mavlog2csv.iter_mavlink_messages(device="test", types={"TEST"}, skip_n_arms=1))
 
     assert len(received_messages) == 1
 
@@ -147,9 +139,7 @@ def test_mavlog2csv(mock_mavlink_stub, tmp_path):
         build_message("TEST", col1="ignored"),
         build_message("EV", Id=10),
         build_message("OTHER", col1="ignored"),
-        build_message(
-            "TEST", col1="used", TimeUS=1_000_000 * 5, _timestamp=dt.timestamp()
-        ),
+        build_message("TEST", col1="used", TimeUS=1_000_000 * 5, _timestamp=dt.timestamp()),
     ]
     mock_mavlink_stub.start()
 

@@ -15,6 +15,12 @@ repos:
         exclude: tests/
         args: [--check-untyped-defs, --ignore-missing-imports]
 
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        files: \.py$
+
   - repo: https://github.com/psf/black
     rev: 23.7.0
     hooks:

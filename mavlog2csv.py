@@ -12,24 +12,14 @@ import operator
 import re
 import sys
 import textwrap
-from typing import (
-    IO,
-    Any,
-    ContextManager,
-    Dict,
-    Iterator,
-    List,
-    Optional,
-    Set,
-    Tuple,
-    Union,
-)
+from typing import IO, Any, ContextManager, Dict, Iterator, List, Optional, Set, Tuple, Union
 
 from pymavlink import mavutil
 from pymavlink.CSVReader import CSVReader
 from pymavlink.DFReader import DFReader
 from pymavlink.dialects.v10.ardupilotmega import MAVLink_message
 from pymavlink.mavutil import mavserial
+
 
 logger = logging.getLogger(__name__)
 
@@ -77,9 +67,7 @@ def open_output(output: Optional[str] = None) -> ContextManager[IO]:
         return contextlib.nullcontext(sys.stdout)
 
 
-def iter_mavlink_messages(
-    device: str, types: Set[str], skip_n_arms: int = 0
-) -> Iterator[MAVLink_message]:
+def iter_mavlink_messages(device: str, types: Set[str], skip_n_arms: int = 0) -> Iterator[MAVLink_message]:
     """
     Return iterator over mavlink messages of `types` from `device`.
     If skip_n_arms is not zero, will return messages only after skip_n_arms ARM messages has been seen.
@@ -90,9 +78,7 @@ def iter_mavlink_messages(
     n_armed = 0
     with mavlink_connect(device) as mav_conn:
         while True:
-            message: Optional[MAVLink_message] = mav_conn.recv_match(
-                blocking=False, type=types
-            )
+            message: Optional[MAVLink_message] = mav_conn.recv_match(blocking=False, type=types)
             n_message += 1
 
             if message is None:
@@ -129,9 +115,7 @@ def message_to_row(message: MAVLink_message, columns: List[str]) -> Dict[str, An
     return row
 
 
-def mavlog2csv(
-    device: str, columns: List[str], output: Optional[str] = None, skip_n_arms: int = 0
-):
+def mavlog2csv(device: str, columns: List[str], output: Optional[str] = None, skip_n_arms: int = 0):
     """
     Convert ardupilot telemetry log into csv with selected columns.
     Specify the input file (.bin telemetry log), some desired telemetry columns (like GPS.Lat), and observe the magic.
@@ -166,9 +150,7 @@ def mavlog2csv(
             quoting=csv.QUOTE_ALL,
         )
         csv_writer.writeheader()
-        for message in iter_mavlink_messages(
-            device=device, types=message_type_filter, skip_n_arms=skip_n_arms
-        ):
+        for message in iter_mavlink_messages(device=device, types=message_type_filter, skip_n_arms=skip_n_arms):
             message_type = message.get_type()
             if message_type in message_type_columns:
                 row = message_to_row(message, message_type_columns[message_type])
