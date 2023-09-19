@@ -15,6 +15,9 @@ pytest = "^7.4.2"
 pre-commit = "^3.4.0"
 pyinstaller = "^5.13.2"
 
+[tool.poetry.scripts]
+mavlog2csv = 'mavlog2csv:main'
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

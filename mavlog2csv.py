@@ -185,7 +185,8 @@ def main():
         "--col",
         action="append",
         required=True,
-        help="Specify telemetry columns to output. Format: <Message type>.<Column>. For example: GPS.Lng",
+        help="Specify telemetry columns to output. You can specify this multiple times. "
+        "Format: <Message type>.<Column>. For example: GPS.Lng",
     )
     parser.add_argument(
         "--skip-n-arms",
