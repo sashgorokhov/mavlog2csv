@@ -1,10 +1,11 @@
-name: Python application
+name: Test and build
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - .gitignore
 
 permissions:
   contents: write
@@ -29,9 +30,11 @@ jobs:
         run: |
           poetry run pytest -svvv tests/
       - name: Build .exe
+        if: github.ref == 'refs/heads/main'
         run: |
           poetry run pyinstaller -y -F --clean --log-level INFO mavlog2csv.py
       - uses: marvinpinto/action-automatic-releases@latest
+        if: github.ref == 'refs/heads/main'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: latest
