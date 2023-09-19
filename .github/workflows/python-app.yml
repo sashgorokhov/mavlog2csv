@@ -10,16 +10,16 @@ permissions:
   contents: write
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  test_and_build:
+    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install poetry
         run: pipx install poetry
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4.7.0
         with:
-          python-version: "3.9"
+          python-version-file: pyproject.toml
           cache: poetry
       - run: poetry install --with dev
       - name: Run pre-commit
@@ -28,22 +28,6 @@ jobs:
       - name: Test
         run: |
           poetry run pytest -svvv tests/
-
-  build:
-    needs:
-      - test
-
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install poetry
-        run: pipx install poetry
-      - uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-          cache: poetry
-      - run: poetry install --with dev
       - name: Build .exe
         run: |
           poetry run pyinstaller -y -F --clean --log-level INFO mavlog2csv.py
