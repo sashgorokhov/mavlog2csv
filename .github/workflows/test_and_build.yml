@@ -23,9 +23,13 @@ jobs:
           python-version-file: pyproject.toml
           cache: poetry
       - run: poetry install --with dev
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Run pre-commit
         run: |
-          poetry run pre-commit run -a --show-diff-on-failure
+          poetry run pre-commit run -a --show-diff-on-failure --color=always
       - name: Test
         run: |
           poetry run pytest -svvv tests/
