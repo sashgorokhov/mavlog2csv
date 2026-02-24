@@ -2,6 +2,7 @@
 """
 Used https://github.com/ArduPilot/pymavlink/blob/master/tools/mavlogdump.py for reference.
 """
+
 import argparse
 import collections
 import contextlib
@@ -12,14 +13,24 @@ import operator
 import re
 import sys
 import textwrap
-from typing import IO, Any, ContextManager, Dict, Iterator, List, Optional, Set, Tuple, Union
+from typing import (
+    IO,
+    Any,
+    ContextManager,
+    Dict,
+    Iterator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Union,
+)
 
 from pymavlink import mavutil
 from pymavlink.CSVReader import CSVReader
 from pymavlink.DFReader import DFReader
 from pymavlink.dialects.v10.ardupilotmega import MAVLink_message
 from pymavlink.mavutil import mavserial
-
 
 logger = logging.getLogger(__name__)
 
@@ -46,15 +57,13 @@ def parse_cli_column(cli_col: str) -> Tuple[str, str]:
     """
     Parse CLI provided column into message type and column name parts.
     """
-    match = re.match("(?P<message_type>\w+)\.(?P<column>\w+)", cli_col)
+    match = re.match(r"(?P<message_type>\w+)\.(?P<column>\w+)", cli_col)
     if not match:
-        raise ValueError(
-            f"""\
+        raise ValueError(f"""\
             Specified column is not correct format:
             Column "{cli_col}" must be <Message type>.<Column>.
             For example: GPS.Lat
-        """
-        )
+        """)
     return match.group(1), match.group(2)
 
 
@@ -160,8 +169,7 @@ def mavlog2csv(device: str, columns: List[str], output: Optional[str] = None, sk
 def main():
     parser = argparse.ArgumentParser(
         description=textwrap.dedent(mavlog2csv.__doc__),  # type: ignore
-        epilog=textwrap.dedent(
-            """\
+        epilog=textwrap.dedent("""\
             Example usage:
 
             # Output GPS Longitude and latitude and airspeed sensor readings
@@ -169,8 +177,7 @@ def main():
 
             # Redirecting stdout into a file on windows. Not recommended, use -o instead.
             python mavlog2csv.py -c GPS.Lng "2023-09-17 13-34-16.bin" 1> output.csv
-        """
-        ),
+        """),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 

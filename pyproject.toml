@@ -1,19 +1,19 @@
 [tool.poetry]
 name = "mavlog2csv"
-version = "1.0"
+version = "1.1"
 description = "Convert ardupilot telemetry log into csv with selected columns"
 authors = ["Alexander Gorokhov"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"  # because of pyinstaller
-pymavlink = "^2.4.40"
+python = ">=3.10,<3.15"  # because of pyinstaller
+pymavlink = "~2.4"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.2"
-pre-commit = "^3.4.0"
-pyinstaller = "^5.13.2"
+pytest = "*"
+pre-commit = "*"
+pyinstaller = "*"
 
 [tool.poetry.scripts]
 mavlog2csv = 'mavlog2csv:main'
@@ -24,10 +24,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 profile = "black"
-atomic = true
-line_length = 120
-lines_after_imports = 2
-combine_as_imports = true
 
 [tool.black]
 line-length = 120
