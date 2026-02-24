@@ -15,10 +15,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install poetry
         run: pipx install poetry
-      - uses: actions/setup-python@v4.7.0
+      - uses: actions/setup-python@v6
         with:
           python-version-file: pyproject.toml
           cache: poetry
