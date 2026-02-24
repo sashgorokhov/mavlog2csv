@@ -63,6 +63,6 @@ mavlog2csv.exe --help
 
 ### Feeling brave?
 ```shell
-pip install pip install https://github.com/sashgorokhov/mavlog2csv/archive/refs/heads/main.zip
+pip install https://github.com/sashgorokhov/mavlog2csv/archive/refs/heads/main.zip
 mavlog2csv --help
 ```
